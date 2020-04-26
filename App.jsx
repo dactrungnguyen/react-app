@@ -1,41 +1,42 @@
-import React, { Component } from 'react';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 class App extends React.Component {
+   constructor() {
+      super();
+      this.state = {data: []};
+      this.setStateHandler = this.setStateHandler.bind(this);
+      this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
+      this.findDomNodeHandler = this.findDomNodeHandler.bind(this);
+   }
+
+   setStateHandler() {
+      var item = 'setState... '
+      var myArray = this.state.data.slice();
+      myArray.push(item);
+      this.setState({data: myArray});
+   }
+
+   forceUpdateHandler() {
+      this.forceUpdate();
+   }
+
+   findDomNodeHandler() {
+      var myDiv = document.getElementById('myDiv');
+      ReactDOM.findDOMNode(myDiv).style.color = 'green';
+   }
+
    render() {
       return (
          <div>
-            <h3>Array: {this.props.propArray}</h3>
-            <h3>Bool: {this.props.propBool ? "True..." : "False..."}</h3>
-            <h3>Func: {this.props.propFunc(3)}</h3>
-            <h3>Number: {this.props.propNumber}</h3>
-            <h3>String: {this.props.propString}</h3>
-            <h3>Object: {this.props.propObject.objectName1}</h3>
-            <h3>Object: {this.props.propObject.objectName2}</h3>
-            <h3>Object: {this.props.propObject.objectName3}</h3>
+            <button onClick={this.setStateHandler}>Set state</button>
+            <h4>State array: {this.state.data}</h4>
+            <button onClick={this.forceUpdateHandler}>Force Update</button>
+            <h4>Random number: {Math.random()}</h4>
+            <button onClick = {this.findDomNodeHandler}>FIND DOME NODE</button>
+            <div id='myDiv'>NODE</div>
          </div>
       );
-   }
-}
-
-App.propTypes = {
-   propArray: React.PropTypes.array.isRequired,
-   propBool: React.PropTypes.bool.isRequired,
-   propFunc: React.PropTypes.func,
-   propNumber: React.PropTypes.number,
-   propString: React.PropTypes.string,
-   propObject: React.PropTypes.object
-}
-
-App.defaultProps = {
-   propArray: [1,2,3,4,5],
-   propBool: true,
-   propFunc: function(e){return e},
-   propNumber: 1,
-   propString: "String value...",
-   propObject: {
-      objectName1:"objectValue1",
-      objectName2: "objectValue2",
-      objectName3: "objectValue3"
    }
 }
 
