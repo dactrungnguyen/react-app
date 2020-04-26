@@ -4,11 +4,11 @@ class Content extends React.Component {
    render() {
       return (
          <div>
-            <input 
-               type='text' 
-               value={this.props.myDataProp}
-               onChange={this.props.updateStateProp}
-            />
+            <button 
+               onClick={this.props.updateStateProp}
+            >
+               Click here
+            </button>
             <h3>{this.props.myDataProp}</h3>
          </div>
       );
@@ -16,21 +16,21 @@ class Content extends React.Component {
 }
 
 class App extends React.Component {
-   constructor() {
-      super();
+   constructor(props) {
+      super(props);
       this.state = {data: 'Initial data'}
       this.updateState = this.updateState.bind(this);
    }
    updateState(e) {
-      this.setState({data: e.target.value});
+      this.setState({data: 'Data updated by event from child'});
    }
    render() {
       return (
          <div>
             <Content 
-               myDataProp={this.state.data}
-               updateStateProp={this.updateState}
-            />
+               myDataProp={this.state.data} 
+               updateStateProp={this.updateState}>
+            </Content>
          </div>
       );
    }
