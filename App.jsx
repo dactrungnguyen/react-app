@@ -1,39 +1,25 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux'
 
-class Content extends React.Component {
+import { addTodo } from './actions/actions'
+
+import AddTodo from './components/AddTodo.js'
+import TodoList from './components/TodoList.js'
+
+class App extends Component {
    render() {
-      return (
-         <div>
-            <div>{this.props.componentData.component}</div>
-            <div>{this.props.componentData.id}</div>
-         </div>
+	   const { dispatch, visibleTodos } = this.props;
+	   return (
+		   <div>
+		   	<AddTodo onAddClick={text => dispatch(addTodo(text))}/>
+		   	<TodoList todos={visibleTodos}/>
+		   </div>
       );
    }
 }
-
-class App extends React.Component {
-   constructor() {
-      super();
-      this.state = {data: [
-         {component: 'First', id: 1},
-         {component: 'Second', id: 2},
-         {component: 'Third', id: 3}
-      ]}
-   }
-   render() {
-      return (
-         <div>
-            {this.state.data.map(
-               (dynamicComponent, i) =>
-               <Content
-                  key={i}
-                  componentData={dynamicComponent}
-               >
-               </Content>
-            )}
-         </div>
-      );
-   }
+function select(state) {
+	return {
+		visibleTodos: state.todos
+	}
 }
-
-export default App;
+export default connect(select)(App)
